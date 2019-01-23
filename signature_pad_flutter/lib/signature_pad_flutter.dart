@@ -41,11 +41,10 @@ class SignaturePadState extends State<SignaturePadWidget>
     implements _SignaturePadDelegate {
   SignaturePadController _controller;
   List<SPPoint> allPoints = [];
-  bool isOnDrawStartCalled;
+  bool _onDrawStartCalled = false;
 
   SignaturePadState(this._controller, SignaturePadOptions opts) {
     this.opts = opts;
-    this.isOnDrawStartCalled = false;
     clear();
     on();
   }
@@ -106,8 +105,8 @@ class SignaturePadState extends State<SignaturePadWidget>
   }
 
   void handleDrawStartedCallback() {
-    if (!isOnDrawStartCalled) {
-      isOnDrawStartCalled = true;
+    if (!_onDrawStartCalled) {
+      _onDrawStartCalled = true;
       if (_controller.onDrawStart != null) {
         _controller.onDrawStart();
       }
@@ -149,7 +148,7 @@ class SignaturePadState extends State<SignaturePadWidget>
     super.clear();
     if (mounted) {
       setState(() {
-        isOnDrawStartCalled = false;
+        _onDrawStartCalled = false;
         allPoints = [];
       });
     }
